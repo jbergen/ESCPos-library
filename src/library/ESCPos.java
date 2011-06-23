@@ -130,7 +130,7 @@ public class ESCPos {
 	 *          String to print
 	 */
 	public void printString(String str){
-		escInit();
+		//escInit();
 		printer.write(str);
 		printer.write(0xA);
 		}
@@ -146,47 +146,72 @@ public class ESCPos {
 	public void printStorage(){
 		printer.write(0xA);
 	}
-	
+	/**
+	 * Prints n lines of blank paper.
+	 * */
 	public void feed(int feed){
-		escInit();
+		//escInit();
 		printer.write(0x1B);
 		printer.write("d");
 		printer.write(feed);
 	}
 	
+	/**
+	 * Prints a string and outputs n lines of blank paper.
+	 * */
+	
 	public void printAndFeed(String str, int feed){
-		escInit();
+		//escInit();
 		printer.write(str);
 		//output extra paper
 		printer.write(0x1B);
 		printer.write("d");
 		printer.write(feed);
 	}
-		 
+		
+	/**
+	 * Sets bold
+	 * */
 	public void setBold(Boolean bool){
 		printer.write(0x1B);
 		printer.write("E");
-		printer.write( (int)(bool?1:0));
+		printer.write((int)(bool?1:0));
 	}
-		 
+		
+	/**
+	 * Sets white on black printing
+	 * */
 	public void setInverse(Boolean bool){
 		printer.write(0x1D);
 		printer.write("B");
 		printer.write( (int)(bool?1:0) );
 	}
-		 
+	
+	/**
+	 * Sets underline and weight
+	 * 
+	 * @param val
+	 * 		0 = no underline.
+	 * 		1 = single weight underline.
+	 * 		2 = double weight underline.
+	 * */
+	
 	public void setUnderline(int val){
 		printer.write(0x1B);
 		printer.write("-");
 		printer.write(val);
 	}
 		 
-	public void printWhitespace(int val){
-		printer.write(0x1B);
-		printer.write("d");
-		printer.write(val);
-	}
-		 
+	
+	/**
+	 * Sets left, center, right justification
+	 * 
+	 * @param val
+	 * 		0 = left justify.
+	 * 		1 = center justify.
+	 * 		2 = right justify.
+	 * */
+	
 	public void setJustification(int val){
 		printer.write(0x1B);
 		printer.write("a");
@@ -493,6 +518,7 @@ public class ESCPos {
 		setJustification(1);
 		printQR("http://www.josephbergen.com", 51, 8);
 		printAndFeed("\n##name## ##version##\nby Joseph Bergen\nwww.josephbergen.com", 4);
+		resetToDefault();
 	}
 }
 
