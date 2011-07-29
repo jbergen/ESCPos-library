@@ -480,6 +480,23 @@ public class ESCPos {
 		
 	}
 	
+	public void cut(){
+		printer.write(0x1D);
+		printer.write("V");
+		printer.write(66);
+		printer.write(0);
+	}
+	
+	public void cutAndFeed(int feed){
+		
+		feed(feed);
+		printer.write(0x1D);
+		printer.write("V");
+		printer.write(66);
+		printer.write(0);
+	}
+	
+	
 	/**
 	 * 
 	 * Print a sample sheet
