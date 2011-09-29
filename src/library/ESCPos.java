@@ -480,10 +480,26 @@ public class ESCPos {
 		
 	}
 	
+	/**
+	 * Store custom character
+	 * input array of column bytes.	NOT WORKING
+	 * @param spacing
+	 * 		Integer representing Vertical motion of unit in inches. 0-255
+	 * 
+	 */
+	public void setLineSpacing(int spacing){
+	
+		//function ESC 3
+		printer.write(0x1B);
+		printer.write("3");
+		printer.write(spacing);
+		
+	}
+	
 	public void cut(){
 		printer.write(0x1D);
 		printer.write("V");
-		printer.write(66);
+		printer.write(48);
 		printer.write(0);
 	}
 	
