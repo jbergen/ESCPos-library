@@ -73,7 +73,7 @@ public class ESCPos {
 	}
 	
 	private void welcome() {
-		System.out.println("\n##name## ##version## by ##author##\n");
+		System.out.println("\n##name## ##version## by ##author##!\n");
 	}
 	
 	public void serialList(){
@@ -465,17 +465,11 @@ public class ESCPos {
 		printer.write(0x1B);
 		printer.write("*");
 		printer.write(mode);
-		printer.write(columnArray.length);//number of cols
+		printer.write( (mode==0 ||mode==1)? columnArray.length : columnArray.length / 3 );//number of cols
 		printer.write(0);
-		
-		if(mode == 0 || mode == 1){
-			for (int i = 0 ; i < columnArray.length ; i++ ){
-				printer.write(columnArray[i]);
-			}
-		}else if(mode == 32 || mode ==32){
-			for (int i = 0 ; i < columnArray.length/3 ; i++ ){
-				printer.write(columnArray[i]);
-			}
+		for (int i = 0 ; i < columnArray.length ; i++ )
+		{
+			printer.write(columnArray[i]);
 		}
 		
 	}
@@ -503,13 +497,22 @@ public class ESCPos {
 		printer.write(0);
 	}
 	
-	public void cutAndFeed(int feed){
+	public void feedAndCut(int feed){
 		
 		feed(feed);
-		printer.write(0x1D);
-		printer.write("V");
-		printer.write(66);
+		cut();
+	}
+	
+	public void beep()
+	{
+		printer.write(0x1B);
+		printer.write("(A");
+		printer.write(4);
 		printer.write(0);
+		printer.write(48);
+		printer.write(55);
+		printer.write(3);
+		printer.write(15);
 	}
 	
 	
